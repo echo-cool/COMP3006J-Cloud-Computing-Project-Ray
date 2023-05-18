@@ -14,6 +14,8 @@ def main():
     )
     # print(response.content)
     print(response.status_code)
+    with open("test_data/zidane_result.jpg", "wb") as f:
+        f.write(response.content)
 
 
 if __name__ == '__main__':
