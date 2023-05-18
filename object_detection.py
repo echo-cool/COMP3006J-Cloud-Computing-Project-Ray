@@ -31,12 +31,12 @@ class APIIngress:
 
 
 @serve.deployment(
-    ray_actor_options={"num_gpus": 0},
+    ray_actor_options={"num_gpus": 1},
     autoscaling_config={"min_replicas": 1, "max_replicas": 2},
 )
 class ObjectDetection:
     def __init__(self):
-        self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
+        self.model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
         self.model.cuda()
 
     def detect(self, image_url: str):
