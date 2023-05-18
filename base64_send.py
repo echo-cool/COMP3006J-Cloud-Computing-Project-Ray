@@ -15,7 +15,7 @@ def main():
         with open(f"test_data/{image_name}", "rb") as f:
             image_base64 = base64.b64encode(f.read()).decode("utf-8")
         response = requests.post(
-            "http://127.0.0.1:8000/detectBase64",
+            "http://ray-node-master:8001/detectBase64",
             json={
                 'image_base64_data': image_base64,
             },

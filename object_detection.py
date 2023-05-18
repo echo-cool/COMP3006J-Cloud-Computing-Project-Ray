@@ -55,7 +55,7 @@ class APIIngress:
 class ObjectDetection:
     def __init__(self):
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
-        self.model.cuda()
+        # self.model.cuda()
 
     def detectBase64(self, image_base64: str):
         image = Image.open(BytesIO(base64.b64decode(image_base64)))
