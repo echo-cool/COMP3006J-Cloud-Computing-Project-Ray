@@ -18,6 +18,17 @@ app = FastAPI()
 class APIIngress:
     def __init__(self, object_detection_handle) -> None:
         self.handle = object_detection_handle
+    @app.post(
+        "/detectBase64",
+        responses={200: {"content": {"image/jpeg": {}}}},
+        response_class=Response,
+    )
+    async def detectBase64(self, image_base64: str):
+        image_ref = await self.handle.detectBase64.remote(image_base64)
+        image = await image_ref
+        file_stream = BytesIO()
+        image.save(file_stream, "jpeg")
+        return Response(content=file_stream.getvalue(), media_type="image/jpeg")
 
     @app.get(
         "/detect",
