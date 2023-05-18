@@ -1,6 +1,4 @@
 ray==2.4.0
-torch==1.10.1+cu113
-
 
 # YOLOv5 requirements
 # Usage: pip install -r requirements.txt
