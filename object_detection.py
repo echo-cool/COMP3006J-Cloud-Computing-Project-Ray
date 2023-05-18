@@ -6,11 +6,14 @@ import numpy as np
 from io import BytesIO
 from fastapi.responses import Response
 from fastapi import FastAPI
-
+from pydantic import BaseModel, Field
 from ray import serve
 
-
 app = FastAPI()
+
+
+class ImageData(BaseModel):
+    image_base64_data: str
 
 
 @serve.deployment(num_replicas=1, route_prefix="/")
@@ -18,13 +21,14 @@ app = FastAPI()
 class APIIngress:
     def __init__(self, object_detection_handle) -> None:
         self.handle = object_detection_handle
+
     @app.post(
         "/detectBase64",
         responses={200: {"content": {"image/jpeg": {}}}},
         response_class=Response,
     )
-    async def detectBase64(self, image_base64: str):
-        image_ref = await self.handle.detectBase64.remote(image_base64)
+    async def detectBase64(self, image_data: ImageData):
+        image_ref = await self.handle.detectBase64.remote(image_data.image_base64_data)
         image = await image_ref
         file_stream = BytesIO()
         image.save(file_stream, "jpeg")

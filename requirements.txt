@@ -47,3 +47,7 @@ setuptools>=65.5.1 # Snyk vulnerability fix
 # mss  # screenshots
 # albumentations>=1.0.3
 # pycocotools>=2.0.6  # COCO mAP
+
+torch~=1.10.1+cu113
+fastapi~=0.95.1
+pydantic~=1.10.7
