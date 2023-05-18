@@ -4,15 +4,16 @@ import requests
 
 
 def main():
-    with open("test.jpg", "rb") as f:
+    with open("test_data/zidane.jpg", "rb") as f:
         image_base64 = base64.b64encode(f.read())
     response = requests.post(
-        "http://http://127.0.0.1:8000/detectBase64",
+        "http://127.0.0.1:8000/detectBase64",
         data={
             'image_base64_data': image_base64,
         },
         headers={"Content-Type": "application/json"},
     )
+    print(response.text)
     print(response.status_code)
 
 
