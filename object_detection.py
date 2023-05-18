@@ -36,7 +36,7 @@ class APIIngress:
 )
 class ObjectDetection:
     def __init__(self):
-        self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
+        self.model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
         self.model.cuda()
 
     def detect(self, image_url: str):
