@@ -1,3 +1,5 @@
+import base64
+
 import torch
 from PIL import Image
 import numpy as np
@@ -16,6 +18,17 @@ app = FastAPI()
 class APIIngress:
     def __init__(self, object_detection_handle) -> None:
         self.handle = object_detection_handle
+    @app.post(
+        "/detectBase64",
+        responses={200: {"content": {"image/jpeg": {}}}},
+        response_class=Response,
+    )
+    async def detectBase64(self, image_base64: str):
+        image_ref = await self.handle.detectBase64.remote(image_base64)
+        image = await image_ref
+        file_stream = BytesIO()
+        image.save(file_stream, "jpeg")
+        return Response(content=file_stream.getvalue(), media_type="image/jpeg")
 
     @app.get(
         "/detect",
@@ -38,6 +51,11 @@ class ObjectDetection:
     def __init__(self):
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
         self.model.cuda()
+
+    def detectBase64(self, image_base64: str):
+        image = Image.open(BytesIO(base64.b64decode(image_base64)))
+        result_im = self.model(image)
+        return Image.fromarray(result_im.render()[0].astype(np.uint8))
 
     def detect(self, image_url: str):
         result_im = self.model(image_url)
