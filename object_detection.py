@@ -1,3 +1,5 @@
+import base64
+
 import torch
 from PIL import Image
 import numpy as np
@@ -38,6 +40,11 @@ class ObjectDetection:
     def __init__(self):
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
         self.model.cuda()
+
+    def detectBase64(self, image_base64: str):
+        image = Image.open(BytesIO(base64.b64decode(image_base64)))
+        result_im = self.model(image)
+        return Image.fromarray(result_im.render()[0].astype(np.uint8))
 
     def detect(self, image_url: str):
         result_im = self.model(image_url)
