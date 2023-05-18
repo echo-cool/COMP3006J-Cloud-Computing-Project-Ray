@@ -23,7 +23,7 @@ def make_request(url):
 def main():
     api_url = "http://127.0.0.1:8000/detectBase64"
     num_requests = 500  # Number of requests to send
-    max_workers = 100  # Maximum number of concurrent workers
+    max_workers = 20  # Maximum number of concurrent workers
     print(f"Sending {num_requests} requests to {api_url}...")
     start_time = time.time()
     print(f"Using {max_workers} workers...")

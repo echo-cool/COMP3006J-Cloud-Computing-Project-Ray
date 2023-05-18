@@ -16,7 +16,7 @@ class ImageData(BaseModel):
     image_base64_data: str
 
 
-@serve.deployment(num_replicas=4, route_prefix="/")
+@serve.deployment(num_replicas=2, route_prefix="/")
 @serve.ingress(app)
 class APIIngress:
     def __init__(self, object_detection_handle) -> None:
@@ -48,8 +48,9 @@ class APIIngress:
 
 
 @serve.deployment(
-    ray_actor_options={"num_gpus": 1, "num_cpus": 4},
-    autoscaling_config={"min_replicas": 1, "max_replicas": 10},
+    ray_actor_options={"num_cpus": 1},
+    num_replicas=2,
+    # autoscaling_config={"min_replicas": 1, "max_replicas": 10},
 )
 class ObjectDetection:
     def __init__(self):
