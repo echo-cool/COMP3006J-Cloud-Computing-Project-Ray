@@ -9,17 +9,21 @@ with open(f"test_data/mzx-1.jpg", "rb") as f:
 
 
 def make_request(url):
-    response = requests.post(
-        url,
-        json={'image_base64_data': image_base64},
-    )
-    return response.status_code
+    try:
+        response = requests.post(
+            url,
+            json={'image_base64_data': image_base64},
+            timeout=20,
+        )
+        return response.status_code
+    except requests.exceptions.Timeout:
+        return 408
 
 
 def main():
     api_url = "http://127.0.0.1:8000/detectBase64"
-    num_requests = 100  # Number of requests to send
-    max_workers = 300  # Maximum number of concurrent workers
+    num_requests = 500  # Number of requests to send
+    max_workers = 100  # Maximum number of concurrent workers
     print(f"Sending {num_requests} requests to {api_url}...")
     start_time = time.time()
     print(f"Using {max_workers} workers...")
