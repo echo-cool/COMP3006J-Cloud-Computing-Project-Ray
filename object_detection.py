@@ -48,8 +48,8 @@ class APIIngress:
 
 
 @serve.deployment(
-    ray_actor_options={"num_cpus": 2},
-    num_replicas=2,
+    ray_actor_options={"num_cpus": 1},
+    num_replicas=4,
     # autoscaling_config={"min_replicas": 1, "max_replicas": 10},
 )
 class ObjectDetection:
