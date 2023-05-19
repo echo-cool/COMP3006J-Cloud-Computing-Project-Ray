@@ -47,8 +47,6 @@ class APIIngress:
         return Response(content=file_stream.getvalue(), media_type="image/jpeg")
 
 
-
-
 @serve.deployment(
     ray_actor_options={"num_cpus": 2},
     num_replicas=2,
@@ -57,7 +55,7 @@ class APIIngress:
 class ObjectDetection:
     def __init__(self):
         # self.model =
-        self.model = torch.hub.load("yolov5/", "yolov5s", pretrained=True)
+        self.model = torch.hub.load("yolov5/", "yolov5s", source="local", pretrained=True)
         # self.model.cuda()
 
     def detectBase64(self, image_base64: str):
