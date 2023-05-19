@@ -55,7 +55,8 @@ class APIIngress:
 class ObjectDetection:
     def __init__(self):
         # self.model =
-        self.model = torch.hub.load("yolov5/", "yolov5s", source="local", pretrained=True)
+        self.model = torch.hub.load('yolov5/', 'custom', 'yolov5s.pt', source='local')  # local repo
+        # self.model = torch.hub.load("yolov5/", "yolov5s", source="local", pretrained=True)
         # self.model.cuda()
 
     def detectBase64(self, image_base64: str):
