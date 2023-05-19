@@ -10,6 +10,8 @@ image_data_list = [
     "mzx-4.jpg",
     "mzx-5.jpg",
 ]
+
+
 def main():
     for image_name in image_data_list:
         with open(f"test_data/{image_name}", "rb") as f:
