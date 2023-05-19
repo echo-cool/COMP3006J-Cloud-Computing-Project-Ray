@@ -57,7 +57,7 @@ class ObjectDetection:
         # self.model =
         self.model = torch.hub.load('yolov5/', 'custom', 'yolov5s.pt', source='local')  # local repo
         # self.model = torch.hub.load("yolov5/", "yolov5s", source="local", pretrained=True)
-        self.model.cuda()
+        # self.model.cuda()
 
     def detectBase64(self, image_base64: str):
         image = Image.open(BytesIO(base64.b64decode(image_base64)))
