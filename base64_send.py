@@ -17,7 +17,7 @@ def main():
         with open(f"test_data/{image_name}", "rb") as f:
             image_base64 = base64.b64encode(f.read()).decode("utf-8")
         response = requests.post(
-            "http://47.104.96.245:8001/detectBase64",
+            "http://ray-node-master:8001/detectBase64",
             json={
                 'image_base64_data': image_base64,
             },
@@ -29,4 +29,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    while True:
+        main()

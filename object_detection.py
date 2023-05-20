@@ -41,15 +41,16 @@ class APIIngress:
     )
     async def detect(self, image_url: str):
         image_ref = await self.handle.detect.remote(image_url)
-        image = await image_ref
-        file_stream = BytesIO()
-        image.save(file_stream, "jpeg")
-        return Response(content=file_stream.getvalue(), media_type="image/jpeg")
+        return Response(content="ok", media_type="text/plain")
+        # image = await image_ref
+        # file_stream = BytesIO()
+        # image.save(file_stream, "jpeg")
+        # return Response(content=file_stream.getvalue(), media_type="image/jpeg")
 
 
 @serve.deployment(
-    ray_actor_options={"num_cpus": 1},
-    num_replicas=4,
+    ray_actor_options={"num_cpus": 4, },
+    num_replicas=6,
     # autoscaling_config={"min_replicas": 1, "max_replicas": 10},
 )
 class ObjectDetection:
